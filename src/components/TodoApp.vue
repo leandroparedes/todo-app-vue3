@@ -14,6 +14,7 @@
                         aria-valuemin="0"
                         aria-valuemax="100"
                         :style="`width: ${progress}%;`"
+                        :class="progressClass"
                     >
                         {{ progress }}%
                     </div>
@@ -55,6 +56,16 @@ export default {
             return Math.round(progress);
         });
 
+        const progressClass = computed(() => {
+            if (progress.value >= 0 && progress.value <= 30) {
+                return "bg-danger";
+            } else if (progress.value > 30 && progress.value <= 60) {
+                return "bg-warning";
+            } else {
+                return "bg-success";
+            }
+        });
+
         function handleTodoAdded(newTodo) {
             todos.value.push(newTodo);
         }
@@ -74,7 +85,7 @@ export default {
 
         function handleMarkAllAs(value) {
             const completed = value === "completed" ? true : false;
-            todos.value.map(todo => todo.completed = completed);
+            todos.value.map((todo) => (todo.completed = completed));
         }
 
         function handleDeleteAll() {
@@ -84,11 +95,12 @@ export default {
         return {
             todos,
             progress,
+            progressClass,
             handleTodoAdded,
             handleTodoCompletion,
             handleRemoveTodo,
             handleMarkAllAs,
-            handleDeleteAll
+            handleDeleteAll,
         };
     },
 };
