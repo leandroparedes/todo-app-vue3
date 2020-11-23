@@ -1,32 +1,43 @@
 <template>
-    <div class="d-flex">
-        <input type="text" placeholder="Your new todo" class="form-control mr-2" v-model="todoText" />
-        <button class="btn btn-primary" @click="add" :disabled="disabled">Add</button>
-    </div>
+    <input
+        type="text"
+        placeholder="Your new todo"
+        class="form-control mr-2"
+        v-model="todoText"
+        @keyup.enter="add"
+    />
+
+    <p v-if="showAlertMessage" class="text-danger mt-2">
+        Todos cannot be greater than 40 characters. Your todo has {{ todoText.length }} characters
+    </p>
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watch, watchEffect } from "vue";
 
 export default {
     emits: ["todoAdded"],
 
     setup: function(_, { emit }) {
         const todoText = ref("");
+        const showAlertMessage = ref(false);
 
-        const disabled = computed(() => {
-            const value = todoText.value.trim();
-            return value.length === 0 || value.length > 40;
+        watchEffect(() => {
+            showAlertMessage.value = todoText.value.length > 40;
         });
 
         function add() {
-            if (todoText.value.trim().length === 0) {
+            const value = todoText.value.trim();
+
+            if (value.length === 0 || value.length > 40) {
                 return;
             }
 
             emit("todoAdded", {
-                id: Math.random().toString(36).substring(7),
-                text: todoText.value,
+                id: Math.random()
+                    .toString(36)
+                    .substring(7),
+                text: value,
                 completed: false,
                 createdAt: Date.now(),
             });
@@ -36,8 +47,8 @@ export default {
 
         return {
             todoText,
-            disabled,
             add,
+            showAlertMessage,
         };
     },
 };

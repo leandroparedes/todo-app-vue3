@@ -87,7 +87,7 @@ export default {
 
 <style scoped>
 .completed {
-    opacity: .4;
+    opacity: 0.4;
 }
 .completed:hover {
     opacity: 1;
