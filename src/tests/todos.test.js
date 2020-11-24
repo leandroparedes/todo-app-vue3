@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 const useTodo = require("../use/useTodo").default;
 
 describe("Creating and deleting todos", () => {
