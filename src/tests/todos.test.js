@@ -161,6 +161,33 @@ describe("Changing the todo status", () => {
 
         todos.value.forEach((todo) => expect(todo.completed).toBe(false));
     });
+
+    test("Completed todos total is accurate", () => {
+        const { todos, totalCompletedTodos } = useTodo();
+
+        todos.value = [
+            {
+                id: "todo-id-1",
+                text: "todo text 1",
+                completed: true,
+                createdAt: Date.now(),
+            },
+            {
+                id: "todo-id-2",
+                text: "todo text 2",
+                completed: true,
+                createdAt: Date.now(),
+            },
+            {
+                id: "todo-id-2",
+                text: "todo text 2",
+                completed: false,
+                createdAt: Date.now(),
+            },
+        ];
+
+        expect(totalCompletedTodos.value).toBe(2);
+    });
 });
 
 describe("Todo progress", () => {
@@ -228,31 +255,4 @@ describe("Todo progress", () => {
 
         expect(progressClass.value).toBe("bg-danger");
     });
-});
-
-test("Completed todos total is accurate", () => {
-    const { todos, totalCompletedTodos } = useTodo();
-
-    todos.value = [
-        {
-            id: "todo-id-1",
-            text: "todo text 1",
-            completed: true,
-            createdAt: Date.now(),
-        },
-        {
-            id: "todo-id-2",
-            text: "todo text 2",
-            completed: true,
-            createdAt: Date.now(),
-        },
-        {
-            id: "todo-id-2",
-            text: "todo text 2",
-            completed: false,
-            createdAt: Date.now(),
-        },
-    ];
-
-    expect(totalCompletedTodos.value).toBe(2);
 });
