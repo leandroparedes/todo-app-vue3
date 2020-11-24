@@ -256,3 +256,7 @@ describe("Todo progress", () => {
         expect(progressClass.value).toBe("bg-danger");
     });
 });
+
+test("Failing test", () => {
+    expect(1).toBe(2);
+});
