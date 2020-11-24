@@ -4,7 +4,7 @@
             <div class="card-body text-center">
                 <h1 class="mb-4">Todo app</h1>
 
-                <todo-input @todo-added="handleTodoAdded"></todo-input>
+                <todo-input @todo-added="addTodo"></todo-input>
 
                 <todo-progress
                     v-if="todos.length"
@@ -15,10 +15,10 @@
 
                 <todo-list
                     :todos="todos"
-                    @todo-completion="handleTodoCompletion"
-                    @remove-todo="handleRemoveTodo"
-                    @mark-all-as="handleMarkAllAs"
-                    @delete-all="handleDeleteAll"
+                    @todo-completion="completeTodo"
+                    @remove-todo="removeTodo"
+                    @mark-all-as="markAllAs"
+                    @delete-all="deleteAll"
                 ></todo-list>
             </div>
         </div>
@@ -32,6 +32,8 @@ import TodoInput from "./TodoInput.vue";
 import TodoList from "./TodoList.vue";
 import TodoProgress from "./TodoProgress.vue";
 
+import useTodo from "@/use/useTodo.js";
+
 export default {
     components: {
         "todo-input": TodoInput,
@@ -40,45 +42,23 @@ export default {
     },
 
     setup: function() {
-        const todos = ref([]);
-
-        function handleTodoAdded(newTodo) {
-            todos.value.push(newTodo);
-        }
-
-        function handleTodoCompletion(data) {
-            const { todoId, completed } = data;
-            const todoIndex = todos.value.findIndex((todo) => todo.id === todoId);
-            const todo = todos.value[todoIndex];
-            todo.completed = completed;
-            todos.value.splice(todoIndex, 1, todo);
-        }
-
-        function handleRemoveTodo(todoId) {
-            const todoIndex = todos.value.findIndex((todo) => todo.id === todoId);
-            todos.value.splice(todoIndex, 1);
-        }
-
-        function handleMarkAllAs(value) {
-            const completed = value === "completed" ? true : false;
-            todos.value.map((todo) => (todo.completed = completed));
-        }
-
-        function handleDeleteAll() {
-            todos.value = [];
-        }
-
-        const totalCompletedTodos = computed(() => {
-            return todos.value.filter((todo) => todo.completed === true).length;
-        });
+        const {
+            todos,
+            addTodo,
+            completeTodo,
+            removeTodo,
+            markAllAs,
+            deleteAll,
+            totalCompletedTodos,
+        } = useTodo();
 
         return {
             todos,
-            handleTodoAdded,
-            handleTodoCompletion,
-            handleRemoveTodo,
-            handleMarkAllAs,
-            handleDeleteAll,
+            addTodo,
+            completeTodo,
+            removeTodo,
+            markAllAs,
+            deleteAll,
             totalCompletedTodos,
         };
     },
