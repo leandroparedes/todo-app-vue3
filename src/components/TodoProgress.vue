@@ -17,28 +17,8 @@
 <script>
 export default {
     props: {
-        total: Number,
-        completed: Number,
-    },
-
-    computed: {
-        progress: function() {
-            const progress = (this.completed * 100) / this.total || 0;
-            console.log("progress", progress);
-            return Math.round(progress);
-        },
-
-        progressClass: function() {
-            const progress = this.progress;
-
-            if (progress >= 0 && progress <= 30) {
-                return "bg-danger";
-            } else if (progress > 30 && progress <= 60) {
-                return "bg-warning";
-            } else {
-                return "bg-success";
-            }
-        },
+        progress: Number,
+        progressClass: String,
     },
 };
 </script>

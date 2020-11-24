@@ -163,6 +163,73 @@ describe("Changing the todo status", () => {
     });
 });
 
+describe("Todo progress", () => {
+    test("Progress percentage is calculated correctly", () => {
+        const { todos, progress } = useTodo();
+
+        todos.value = [
+            {
+                id: "todo-id-1",
+                text: "todo text 1",
+                completed: true,
+                createdAt: Date.now(),
+            },
+            {
+                id: "todo-id-2",
+                text: "todo text 2",
+                completed: false,
+                createdAt: Date.now(),
+            },
+        ];
+
+        expect(progress.value).toBe(50);
+
+        todos.value.push({
+            id: "todo-id-3",
+            text: "todo text 3",
+            completed: false,
+            createdAt: Date.now(),
+        });
+
+        expect(progress.value).toBe(33);
+    });
+
+    test("Progress bar color class is calculated correctly", () => {
+        const { todos, progressClass } = useTodo();
+
+        todos.value = [
+            {
+                id: "some-id",
+                text: "todo text",
+                completed: true,
+                createdAt: Date.now(),
+            },
+        ];
+
+        expect(progressClass.value).toBe("bg-success");
+
+        todos.value.push({
+            id: "some-id",
+            text: "todo-text",
+            completed: false,
+            createdAt: Date.now(),
+        });
+
+        expect(progressClass.value).toBe("bg-warning");
+
+        for (let i = 0; i < 3; i++) {
+            todos.value.push({
+                id: "some-id",
+                text: "todo-text",
+                completed: false,
+                createdAt: Date.now(),
+            });
+        }
+
+        expect(progressClass.value).toBe("bg-danger");
+    });
+});
+
 test("Completed todos total is accurate", () => {
     const { todos, totalCompletedTodos } = useTodo();
 

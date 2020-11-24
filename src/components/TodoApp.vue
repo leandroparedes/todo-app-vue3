@@ -8,8 +8,8 @@
 
                 <todo-progress
                     v-if="todos.length"
-                    :total="todos.length"
-                    :completed="totalCompletedTodos"
+                    :progress="progress"
+                    :progress-class="progressClass"
                     class="my-3"
                 ></todo-progress>
 
@@ -48,6 +48,8 @@ export default {
             markAllAs,
             deleteAll,
             totalCompletedTodos,
+            progress,
+            progressClass
         } = useTodo();
 
         return {
@@ -58,6 +60,8 @@ export default {
             markAllAs,
             deleteAll,
             totalCompletedTodos,
+            progress,
+            progressClass
         };
     },
 };
