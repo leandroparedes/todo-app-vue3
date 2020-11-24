@@ -26,11 +26,9 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
-
 import TodoInput from "./TodoInput.vue";
-import TodoList from "./TodoList.vue";
 import TodoProgress from "./TodoProgress.vue";
+import TodoList from "./TodoList.vue";
 
 import useTodo from "@/use/useTodo.js";
 
