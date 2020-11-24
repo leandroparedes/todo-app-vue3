@@ -6,29 +6,20 @@
 
                 <todo-input @todo-added="handleTodoAdded"></todo-input>
 
-                <div v-if="todos.length" class="progress mt-4">
-                    <div
-                        class="progress-bar"
-                        role="progressbar"
-                        :aria-valuenow="progress"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        :style="`width: ${progress}%;`"
-                        :class="progressClass"
-                    >
-                        {{ progress }}%
-                    </div>
-                </div>
+                <todo-progress
+                    v-if="todos.length"
+                    :total="todos.length"
+                    :completed="totalCompletedTodos"
+                    class="my-3"
+                ></todo-progress>
 
-                <div class="mt-4">
-                    <todo-list
-                        :todos="todos"
-                        @todo-completion="handleTodoCompletion"
-                        @remove-todo="handleRemoveTodo"
-                        @mark-all-as="handleMarkAllAs"
-                        @delete-all="handleDeleteAll"
-                    ></todo-list>
-                </div>
+                <todo-list
+                    :todos="todos"
+                    @todo-completion="handleTodoCompletion"
+                    @remove-todo="handleRemoveTodo"
+                    @mark-all-as="handleMarkAllAs"
+                    @delete-all="handleDeleteAll"
+                ></todo-list>
             </div>
         </div>
     </div>
@@ -36,35 +27,20 @@
 
 <script>
 import { computed, ref } from "vue";
+
 import TodoInput from "./TodoInput.vue";
 import TodoList from "./TodoList.vue";
+import TodoProgress from "./TodoProgress.vue";
 
 export default {
     components: {
         "todo-input": TodoInput,
         "todo-list": TodoList,
+        "todo-progress": TodoProgress,
     },
 
     setup: function() {
         const todos = ref([]);
-
-        const progress = computed(() => {
-            const total = todos.value.length;
-            const completed = todos.value.filter((todo) => todo.completed === true).length;
-            const progress = (completed * 100) / total || 0;
-
-            return Math.round(progress);
-        });
-
-        const progressClass = computed(() => {
-            if (progress.value >= 0 && progress.value <= 30) {
-                return "bg-danger";
-            } else if (progress.value > 30 && progress.value <= 60) {
-                return "bg-warning";
-            } else {
-                return "bg-success";
-            }
-        });
 
         function handleTodoAdded(newTodo) {
             todos.value.push(newTodo);
@@ -92,15 +68,18 @@ export default {
             todos.value = [];
         }
 
+        const totalCompletedTodos = computed(() => {
+            return todos.value.filter((todo) => todo.completed === true).length;
+        });
+
         return {
             todos,
-            progress,
-            progressClass,
             handleTodoAdded,
             handleTodoCompletion,
             handleRemoveTodo,
             handleMarkAllAs,
             handleDeleteAll,
+            totalCompletedTodos,
         };
     },
 };
