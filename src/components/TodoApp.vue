@@ -49,7 +49,7 @@ export default {
             deleteAll,
             totalCompletedTodos,
             progress,
-            progressClass
+            progressClass,
         } = useTodo();
 
         return {
@@ -61,7 +61,7 @@ export default {
             deleteAll,
             totalCompletedTodos,
             progress,
-            progressClass
+            progressClass,
         };
     },
 };
