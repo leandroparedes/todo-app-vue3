@@ -164,7 +164,7 @@ describe("Changing the todo status", () => {
         todos.value.forEach((todo) => expect(todo.completed).toBe(false));
     });
 
-    test("Completed todos total is accurate", () => {
+    test("completed todos total is accurate", () => {
         const { todos, totalCompletedTodos } = useTodo();
 
         todos.value = [
@@ -193,7 +193,7 @@ describe("Changing the todo status", () => {
 });
 
 describe("Todo progress", () => {
-    test("Progress percentage is calculated correctly", () => {
+    test("progress percentage is calculated correctly", () => {
         const { todos, progress } = useTodo();
 
         todos.value = [
@@ -223,7 +223,7 @@ describe("Todo progress", () => {
         expect(progress.value).toBe(33);
     });
 
-    test("Progress bar color class is calculated correctly", () => {
+    test("progress bar color class is calculated correctly", () => {
         const { todos, progressClass } = useTodo();
 
         todos.value = [
@@ -257,8 +257,4 @@ describe("Todo progress", () => {
 
         expect(progressClass.value).toBe("bg-danger");
     });
-});
-
-test("Failing test", () => {
-    expect(1).toBe(1);
 });

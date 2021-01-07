@@ -13,26 +13,26 @@
         </div>
 
         <ul class="list-group">
-            <li
-                class="list-group-item d-flex justify-content-between align-items-center"
-                v-for="todo in todos"
-                :key="todo.id"
-                :class="{ completed: todo.completed === true }"
-            >
-                {{ todo.text }}
+            <li class="list-group-item" v-for="todo in todos" :key="todo.id">
+                <div
+                    class="d-flex justify-content-between align-items-center"
+                    :class="{ completed: todo.completed === true }"
+                >
+                    {{ todo.text }}
 
-                <div>
-                    <button
-                        v-if="todo.completed"
-                        class="btn btn-sm btn-warning mr-2"
-                        @click="incomplete(todo.id)"
-                    >
-                        Incomplete
-                    </button>
-                    <button v-else class="btn btn-sm btn-success mr-2" @click="complete(todo.id)">
-                        Complete
-                    </button>
-                    <button class="btn btn-sm btn-danger" @click="remove(todo.id)">Delete</button>
+                    <div>
+                        <button
+                            v-if="todo.completed"
+                            class="btn btn-sm btn-warning mr-2"
+                            @click="incomplete(todo.id)"
+                        >
+                            Incomplete
+                        </button>
+                        <button v-else class="btn btn-sm btn-success mr-2" @click="complete(todo.id)">
+                            Complete
+                        </button>
+                        <button class="btn btn-sm btn-danger" @click="remove(todo.id)">Delete</button>
+                    </div>
                 </div>
             </li>
         </ul>
