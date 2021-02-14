@@ -12,7 +12,7 @@
             <button class="btn btn-sm btn-outline-danger" @click="deleteAll">Delete all</button>
         </div>
 
-        <ul class="list-group">
+        <ul id="todos-list" class="list-group">
             <li class="list-group-item" v-for="todo in todos" :key="todo.id">
                 <div
                     class="d-flex justify-content-between align-items-center"
