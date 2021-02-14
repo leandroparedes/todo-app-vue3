@@ -1,5 +1,6 @@
 <template>
     <input
+        id="todo-title"
         type="text"
         placeholder="Your new todo"
         class="form-control mr-2"
